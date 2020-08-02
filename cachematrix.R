@@ -1,15 +1,33 @@
-## Put comments here that give an overall description of what your
-## functions do
+## Matrix stored  cache
 
-## Write a short comment describing this function
+##creates a special "matrix"
 
 makeCacheMatrix <- function(x = matrix()) {
-
+  m <- NULL
+  set <- function(y) {
+    x <<- y
+    m <<- NULL
+  }
+  get <- function() x
+  setsolve <- function(solve) m <<- solve
+  getsolve <- function() m
+  list(set = set, get = get,
+       setsolve = solve,
+       getsolve = solve)
 }
 
 
-## Write a short comment describing this function
+## inverse of a square matrix
 
 cacheSolve <- function(x, ...) {
-        ## Return a matrix that is the inverse of 'x'
+       
+  m <- x$getsolve()
+  if(!is.null(m)) {
+    message("getting cached data")
+    return(m)
+  }
+  data <- x$solve()
+  m <- solve(data, ...)
+  x$setsolve(m)
+  m
 }
